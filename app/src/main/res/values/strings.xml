@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">projet_prog_mobile</string>
+    <string name="splash">SplashScreen</string>
+    <string name="main">MainActivity</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.projet_prog_mobile
+package com.example.projet_prog_mobile.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

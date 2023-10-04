@@ -1,4 +1,4 @@
-package com.example.projet_prog_mobile
+package com.example.projet_prog_mobile.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.RowScope
