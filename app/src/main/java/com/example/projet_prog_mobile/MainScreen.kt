@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -21,14 +22,14 @@ import com.example.projet_prog_mobile.components.bottomBar.BottomNavBarGraph
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
+fun MainScreen(modifier: Modifier){
     val navController = rememberNavController()
     Scaffold (
         bottomBar = {
             BottomBar(navController = navController)
         }
     ){
-        BottomNavBarGraph(navController = navController)
+        BottomNavBarGraph(navController = navController, modifier =  modifier)
     }
 }
 
