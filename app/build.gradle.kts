@@ -45,6 +45,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3"
@@ -61,8 +62,10 @@ dependencies {
     val room_version = "2.6.0"
     val hilt_version = "2.48.1"
 
-    implementation("com.squareup.retrofit2:retrofit:2.1.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.1.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.12.0")
+    implementation("com.google.code.gson:gson:2.8.6")
 
 
     //room

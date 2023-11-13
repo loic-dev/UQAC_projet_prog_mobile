@@ -46,11 +46,6 @@ object UserModule {
         return appDatabase.userDao()
     }
 
-    @Provides
-    @Singleton
-    fun provideUserApi(retrofit: Retrofit): UserApi {
-        return retrofit.create(UserApi::class.java)
-    }
 
     @Provides
     @Singleton

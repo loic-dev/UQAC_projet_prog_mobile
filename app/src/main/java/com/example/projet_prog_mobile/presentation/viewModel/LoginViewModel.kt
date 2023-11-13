@@ -32,8 +32,6 @@ class LoginViewModel @Inject constructor(
         checkInputValidation()
     }
 
-
-
     fun onLoginClick(){
         loginState = loginState.copy(isLoading = true)
         viewModelScope.launch {

@@ -5,6 +5,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 
 interface UserApi {
-    @GET("/auth")
-    suspend fun authUser(@Header("Authorization") token: String): ApiResponse<UserAuthResponse>
+
+    @GET("/api")
+    suspend fun authUser(@Header("Authorization") token: String): ApiResponse<UserAuthResponse>;
+
 }
