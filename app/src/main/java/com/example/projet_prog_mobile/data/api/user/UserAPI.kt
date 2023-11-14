@@ -1,12 +1,17 @@
 package com.example.projet_prog_mobile.data.api.user
 
 import com.example.projet_prog_mobile.data.api.ApiResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 
 interface UserApi {
 
     @GET("/api")
     suspend fun authUser(@Header("Authorization") token: String): ApiResponse<UserAuthResponse>;
+
+    @POST("/register")
+    suspend fun registerUser(@Body firstName: String, lastName: String, email: String, password: String): ApiResponse<UserRegisterResponse>;
 
 }
