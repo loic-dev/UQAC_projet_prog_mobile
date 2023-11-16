@@ -22,7 +22,14 @@ class RegisterViewModel @Inject constructor(
     var registerState by mutableStateOf(RegisterState())
         private set
 
-
+    fun onFirstNameInputChange(newValue: String){
+        registerState = registerState.copy(firstNameInput = newValue)
+        checkInputValidation()
+    }
+    fun onLastNameInputChange(newValue: String){
+        registerState = registerState.copy(lastNameInput = newValue)
+        checkInputValidation()
+    }
     fun onEmailInputChange(newValue: String){
         registerState = registerState.copy(emailInput = newValue)
         checkInputValidation()
@@ -33,8 +40,8 @@ class RegisterViewModel @Inject constructor(
         checkInputValidation()
     }
 
-    fun onPassword2InputChange(newValue: String){
-        registerState = registerState.copy(passwordInput2 = newValue)
+    fun onPasswordConfirmInputChange(newValue: String){
+        registerState = registerState.copy(passwordConfirmInput = newValue)
         checkInputValidation()
     }
 
@@ -42,7 +49,8 @@ class RegisterViewModel @Inject constructor(
         registerState = registerState.copy(isLoading = true)
         viewModelScope.launch {
             registerState = try{
-                val registerResult = userRepository.authUser()
+
+                val registerResult = userRepository.registerUser(registerState.firstNameInput, registerState.lastNameInput, registerState.emailInput, registerState.passwordInput)
                 registerState.copy(isSuccessRegister = registerResult)
             }catch(e: Exception){
                 registerState.copy(errorMessageRegister = "Could not register")
@@ -54,9 +62,11 @@ class RegisterViewModel @Inject constructor(
 
     private fun checkInputValidation(){
         val validationResult = validateRegisterInputUseCase(
+            registerState.firstNameInput,
+            registerState.lastNameInput,
             registerState.emailInput,
             registerState.passwordInput,
-            registerState.passwordInput2
+            registerState.passwordConfirmInput
         )
         processInputValidationType(validationResult)
     }

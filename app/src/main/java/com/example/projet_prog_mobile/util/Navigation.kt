@@ -17,7 +17,7 @@ import com.example.projet_prog_mobile.presentation.screens.register_screen.Regis
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = ScreenRoutes.SplashScreen.route){
+    NavHost(navController = navController, startDestination = ScreenRoutes.LoginScreen.route){
         composable(ScreenRoutes.SplashScreen.route){
             SplashScreen(
                 onLoginSuccessNavigation = {
@@ -49,7 +49,8 @@ fun Navigation() {
                     navController.navigate(ScreenRoutes.LoginScreen.route){
                         popUpTo(0)
                     }
-                }
+                },
+                navController = navController
             )
         }
 

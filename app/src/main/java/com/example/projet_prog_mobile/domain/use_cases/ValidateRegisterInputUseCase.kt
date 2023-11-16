@@ -4,14 +4,21 @@ import com.example.projet_prog_mobile.domain.model.RegisterInputValidationType
 import javax.inject.Inject
 
 class ValidateRegisterInputUseCase @Inject constructor() {
-    operator fun invoke(email: String, password: String, password2: String): RegisterInputValidationType {
-        if (email.isEmpty() || password.isEmpty() || password2.isEmpty()) {
+    operator fun invoke(
+        firstName: String,
+        lastName: String,
+        email: String,
+        passwordInput: String,
+        passwordConfirmInput: String,
+
+    ): RegisterInputValidationType {
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || passwordInput.isEmpty() || passwordConfirmInput.isEmpty()) {
             return RegisterInputValidationType.EmptyField
         }
         if ("@" !in email) {
             return RegisterInputValidationType.NoEmail
         }
-        if (!password.equals(password2)) {
+        if (!passwordInput.equals(passwordConfirmInput)) {
             return RegisterInputValidationType.WrongPassword
         }
         return RegisterInputValidationType.Valid

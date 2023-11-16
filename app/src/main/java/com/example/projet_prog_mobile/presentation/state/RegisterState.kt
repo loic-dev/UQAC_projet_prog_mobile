@@ -1,9 +1,11 @@
 package com.example.projet_prog_mobile.presentation.state
 
 data class RegisterState(
+    val firstNameInput: String = "",
+    val lastNameInput:String = "",
     val emailInput: String = "",
     val passwordInput:String = "",
-    val passwordInput2:String = "",
+    val passwordConfirmInput:String = "",
     val isInputValid:Boolean = false,
     val isPasswordShown:Boolean = false,
     val errorMessageInput:String? = null,
