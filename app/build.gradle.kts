@@ -59,6 +59,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.window:window:1.1.0")
     val room_version = "2.6.0"
     val hilt_version = "2.48.1"
 

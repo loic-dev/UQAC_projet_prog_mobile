@@ -13,4 +13,8 @@ class UserRemoteDataSource @Inject constructor(
     suspend fun login(email:String, password:String): UserLoginResponse{
         return handleApiCall { userApi.loginUser(LoginRequest(email,password)) }
     }
+
+    suspend fun register(firstName: String, lastName: String, email: String, password: String): UserRegisterResponse{
+        return handleApiCall { userApi.registerUser(firstName, lastName, email, password) }
+    }
 }

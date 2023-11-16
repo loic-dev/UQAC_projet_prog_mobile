@@ -11,6 +11,9 @@ interface UserApi {
     @GET("/api")
     suspend fun authUser(@Header("Authorization") token: String): ApiResponse<UserAuthResponse>;
 
+    @POST("/register")
+    suspend fun registerUser(@Body firstName: String, lastName: String, email: String, password: String): ApiResponse<UserRegisterResponse>;
+
     @POST("/login")
     suspend fun loginUser(@Body request: LoginRequest): ApiResponse<UserLoginResponse>;
 

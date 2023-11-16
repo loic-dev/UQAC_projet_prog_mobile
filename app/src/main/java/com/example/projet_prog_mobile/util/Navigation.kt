@@ -11,12 +11,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projet_prog_mobile.presentation.screens.MainScreen
 import com.example.projet_prog_mobile.presentation.screens.SplashScreen
 import com.example.projet_prog_mobile.presentation.screens.login_screen.LoginScreen
+import com.example.projet_prog_mobile.presentation.screens.register_screen.RegisterScreen
 
 @Composable
 fun Navigation(modifier: Modifier) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = ScreenRoutes.SplashScreen.route){
+    NavHost(navController = navController, startDestination = ScreenRoutes.LoginScreen.route){
         composable(ScreenRoutes.SplashScreen.route){
             SplashScreen(
                 onLoginSuccessNavigation = {
@@ -43,6 +44,18 @@ fun Navigation(modifier: Modifier) {
                 navController = navController
             )
         }
+
+        composable(ScreenRoutes.RegisterScreen.route){
+            RegisterScreen(
+                onRegisterSuccessNavigation = {
+                    navController.navigate(ScreenRoutes.LoginScreen.route){
+                        popUpTo(0)
+                    }
+                },
+                navController = navController
+            )
+        }
+
         composable(ScreenRoutes.HomeScreen.route){
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -57,5 +70,6 @@ fun Navigation(modifier: Modifier) {
 sealed class ScreenRoutes(val route:String){
     object SplashScreen:ScreenRoutes("splash_screen")
     object LoginScreen:ScreenRoutes("login_screen")
+    object RegisterScreen:ScreenRoutes("register_screen")
     object HomeScreen:ScreenRoutes("home_screen")
 }

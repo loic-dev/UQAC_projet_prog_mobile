@@ -40,4 +40,9 @@ class UserRepositoryImpl(
     }
 
 
+
+    override suspend fun registerUser(firstName: String, lastName: String, email: String, password: String): Boolean {
+        val result = userRemoteDataSource.register(firstName, lastName, email, password)
+        return result.register;
+    }
 }
