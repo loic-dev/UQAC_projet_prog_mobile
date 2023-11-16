@@ -8,4 +8,8 @@ class UserLocalDataSource @Inject constructor(
     fun getUserEntity(): User {
         return userDao.getUserEntity()
     }
+
+    fun createUserEntity(user:User){
+        userDao.createUserEntity(user)
+    }
 }

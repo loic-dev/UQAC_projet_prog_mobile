@@ -1,7 +1,5 @@
 package com.example.projet_prog_mobile.presentation.viewModel
 
-
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,8 +22,6 @@ class AuthViewModel @Inject constructor(
         _authState.value = _authState.value?.copy(loading = true)
         viewModelScope.launch {
             try{
-                Log.d("auth", "view")
-
                 val authResult = userRepository.authUser()
                 _authState.value = _authState.value?.copy(auth = authResult)
             }catch(e: Exception){

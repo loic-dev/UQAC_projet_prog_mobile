@@ -24,9 +24,16 @@ object NetworkModule {
             .addInterceptor { chain ->
                 val request: Request = chain.request()
                 Log.d("Retrofit", "Sending request " + request.url())
-                val response: Response = chain.proceed(request)
-                Log.d("Retrofit", "Received response for " + response.request().url())
-                response
+
+                try {
+                    val response: Response = chain.proceed(request)
+                    Log.d("Retrofit", "Received response for " + response.request().url())
+                    response
+                } catch (e: Exception) {
+                    // Gérez l'exception ici
+                    Log.e("Retrofit", "Request failed with exception: ${e.message}")
+                    throw e // Propagez l'exception après la gestion
+                }
             }
             .build()
     }
@@ -41,7 +48,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.111:8000/")
+            .baseUrl("http://192.168.1.122:8000/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

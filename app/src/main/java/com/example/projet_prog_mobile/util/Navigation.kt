@@ -13,7 +13,7 @@ import com.example.projet_prog_mobile.presentation.screens.SplashScreen
 import com.example.projet_prog_mobile.presentation.screens.login_screen.LoginScreen
 
 @Composable
-fun Navigation() {
+fun Navigation(modifier: Modifier) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = ScreenRoutes.SplashScreen.route){
@@ -34,11 +34,13 @@ fun Navigation() {
         }
         composable(ScreenRoutes.LoginScreen.route){
             LoginScreen(
+                modifier = modifier,
                 onLoginSuccessNavigation = {
                     navController.navigate(ScreenRoutes.HomeScreen.route){
                         popUpTo(0)
                     }
-                }
+                },
+                navController = navController
             )
         }
         composable(ScreenRoutes.HomeScreen.route){

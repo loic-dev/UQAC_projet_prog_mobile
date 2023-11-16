@@ -1,15 +1,26 @@
 package com.example.projet_prog_mobile.domain.use_cases
 
-import com.example.projet_prog_mobile.domain.model.LoginInputValidationType
+import com.example.projet_prog_mobile.domain.model.EmailInputValidationType
+import com.example.projet_prog_mobile.domain.model.PasswordInputValidationType
 
-class ValidateLoginInputUseCase {
-    operator fun invoke(email: String, password:String):LoginInputValidationType{
-        if(email.isEmpty() || password.isEmpty()){
-            return LoginInputValidationType.EmptyField
+
+class ValidateEmailInputUseCase {
+    operator fun invoke(input:String): EmailInputValidationType {
+        if(input.isEmpty()){
+            return EmailInputValidationType.EmptyField
         }
-        if("@" !in email){
-            return LoginInputValidationType.NoEmail
+        if(input == "test"){
+            return EmailInputValidationType.NoEmail
         }
-        return LoginInputValidationType.Valid
+        return EmailInputValidationType.Valid
+    }
+}
+
+class ValidatePasswordInputUseCase {
+    operator fun invoke(input:String):PasswordInputValidationType{
+        if(input.isEmpty()){
+            return PasswordInputValidationType.EmptyField
+        }
+        return PasswordInputValidationType.Valid
     }
 }

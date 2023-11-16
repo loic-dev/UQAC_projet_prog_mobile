@@ -7,12 +7,12 @@ import com.example.projet_prog_mobile.data.local.user.UserDao
 import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
 import com.example.projet_prog_mobile.data.repository.UserRepositoryImpl
 import com.example.projet_prog_mobile.domain.repository.UserRepository
-import com.example.projet_prog_mobile.domain.use_cases.ValidateLoginInputUseCase
+import com.example.projet_prog_mobile.domain.use_cases.ValidateEmailInputUseCase
+import com.example.projet_prog_mobile.domain.use_cases.ValidatePasswordInputUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -21,8 +21,14 @@ object UserModule {
 
     @Provides
     @Singleton
-    fun provideValidateLoginInputUseCase(): ValidateLoginInputUseCase {
-        return ValidateLoginInputUseCase()
+    fun provideValidatePasswordInputUseCase(): ValidatePasswordInputUseCase {
+        return ValidatePasswordInputUseCase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideValidateEmailInputUseCase(): ValidateEmailInputUseCase {
+        return ValidateEmailInputUseCase()
     }
 
     @Provides
