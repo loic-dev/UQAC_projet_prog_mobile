@@ -1,6 +1,5 @@
 package com.example.projet_prog_mobile.presentation.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,10 +29,5 @@ fun RegisterButton(
 @Preview(showBackground = true)
 @Composable
 fun RegisterButtonPreview() {
-    AuthButton(
-        text = "Register",
-        onButtonClick = { },
-        isLoading = true,
-        modifier = Modifier.fillMaxWidth()
-    )
+
 }

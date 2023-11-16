@@ -185,7 +185,7 @@ fun LoginContainer(
             Text(
                 text = "Sign up",
                 modifier = Modifier.clickable {
-                    navController.navigate("home_screen")
+                    navController.navigate("register_screen")
                 },
                 color = colorResource(id = R.color.main_pink)
             )
