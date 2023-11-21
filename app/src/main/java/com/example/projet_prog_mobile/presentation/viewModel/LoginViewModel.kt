@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.example.projet_prog_mobile.data.api.ApiException
 import com.example.projet_prog_mobile.domain.model.EmailInputValidationType
 import com.example.projet_prog_mobile.domain.model.PasswordInputValidationType
 import com.example.projet_prog_mobile.domain.repository.UserRepository
@@ -70,6 +71,8 @@ class LoginViewModel @Inject constructor(
             try {
                 val loginResult = userRepository.loginUser(loginState.emailInput, loginState.passwordInput)
                 loginState = loginState.copy(isSuccessLogin = loginResult)
+            } catch (e: ApiException){
+                loginState = loginState.copy(isSuccessLogin = false, errorMessageAPI=e.message)
             } finally {
                 loginState = loginState.copy(isLoading = false, emailInput = "", passwordInput = "")
             }

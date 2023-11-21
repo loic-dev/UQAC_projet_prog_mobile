@@ -9,14 +9,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,10 +34,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -50,7 +55,6 @@ fun LoginScreen(
     navController: NavController
 
 ) {
-
     NavDestinationHelper(
         shouldNavigate = {
             loginViewModel.loginState.isSuccessLogin
@@ -71,9 +75,11 @@ fun LoginScreen(
                     Text(modifier= Modifier.padding(bottom = 5.dp),
                         fontSize = 35.sp,
                         fontWeight = FontWeight.Bold,
-                        text = "Sign In")
+                        text = stringResource(R.string.login_page_title)
+                    )
                     Text(fontSize = 15.sp,
-                        text = "Please sign in to your account first")
+                        text = stringResource(R.string.login_page_subtitle)
+                    )
             }
 
         }
@@ -83,6 +89,7 @@ fun LoginScreen(
             passwordValue = { loginViewModel.loginState.passwordInput },
             buttonEnabled = { loginViewModel.loginState.isInputEmailValid && loginViewModel.loginState.isInputPasswordValid },
             onEmailChanged = loginViewModel::onEmailInputChange,
+            onErrorAPI= {loginViewModel.loginState.errorMessageAPI},
             onPasswordChanged = loginViewModel::onPasswordInputChange,
             onLoginButtonClick = loginViewModel::onLoginClick,
             errorEmail = {loginViewModel.loginState.errorMessageEmail},
@@ -102,6 +109,7 @@ fun LoginContainer(
     onEmailChanged:(String) -> Unit,
     onPasswordChanged:(String) -> Unit,
     onLoginButtonClick:()->Unit,
+    onErrorAPI:()->String?,
     errorEmail:()->String?,
     errorPassword:()->String?,
     isLoading:()->Boolean,
@@ -112,14 +120,23 @@ fun LoginContainer(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ){
+        if(onErrorAPI() != null){
+            Text(
+                text = onErrorAPI() ?: "",
+                color= MaterialTheme.colors.error,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = emailValue(),
             onValueChange = onEmailChanged,
             singleLine = true,
-            placeholder = { Text(text = "Enter email",color = colorResource(id = R.color.dark_grey))},
+            placeholder = { Text(text = stringResource(R.string.email_input_placeholder),color = colorResource(id = R.color.dark_grey))},
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Ascii),
             shape = RoundedCornerShape(15.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -129,14 +146,14 @@ fun LoginContainer(
                 textColor = colorResource(id = R.color.main_pink)
             ),
         )
-        if(errorEmail() != null) Text(text = errorEmail() ?: "", color=colorResource(id = R.color.main_pink))
+        if(errorEmail() != null) Text(text = errorEmail() ?: "", color=MaterialTheme.colors.error)
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = passwordValue(),
             visualTransformation = if(passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             onValueChange = onPasswordChanged,
             singleLine = true,
-            placeholder = { Text(text = "Enter password",color = colorResource(id = R.color.dark_grey))},
+            placeholder = { Text(text = stringResource(R.string.password_input_placeholder),color = colorResource(id = R.color.dark_grey))},
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
             shape = RoundedCornerShape(15.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -151,14 +168,16 @@ fun LoginContainer(
                 ) {
                     Icon(
                         imageVector = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                        contentDescription = if (passwordVisible) "Hide Password" else "Show Password",
+                        contentDescription = if (passwordVisible) stringResource(R.string.blind_text_hide_password) else stringResource(
+                            R.string.blind_text_show_password
+                        ),
                         tint = colorResource(id = R.color.dark_grey)
                     )
                 }
             }
 
         )
-        if(errorPassword() != null) Text(text = errorPassword() ?: "", color=colorResource(id = R.color.main_pink))
+        if(errorPassword() != null) Text(text = errorPassword() ?: "", color=MaterialTheme.colors.error)
         Button(
             modifier= Modifier
                 .fillMaxWidth()
@@ -171,30 +190,28 @@ fun LoginContainer(
             enabled = buttonEnabled()
         ){
             if(isLoading()){
-                Text(text = "loading...", color=colorResource(id = R.color.white))
+                CircularProgressIndicator(
+                    color = colorResource(id = R.color.white),
+                    modifier = Modifier.size(20.dp)
+                )
             }else{
-                Text(text = "Sign In", color=colorResource(id = R.color.white))
+                Text(text = stringResource(R.string.login_page_button_text), color=colorResource(id = R.color.white))
             }
         }
         Row(modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)){
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center){
             Text(
-                text = "Don’t have an account yet ?",
+                text = stringResource(R.string.login_page_link_to_signup_text_question),
             )
             Text(
-                text = "Sign up",
+                text = stringResource(R.string.login_page_link_to_signup_text),
                 modifier = Modifier.clickable {
                     navController.navigate("register_screen")
                 },
                 color = colorResource(id = R.color.main_pink)
             )
         }
-
-
-
-
-
     }
 }
 

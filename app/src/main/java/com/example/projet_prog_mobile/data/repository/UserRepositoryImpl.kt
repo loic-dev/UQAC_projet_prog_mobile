@@ -1,6 +1,6 @@
 package com.example.projet_prog_mobile.data.repository
 
-import android.util.Log
+import com.example.projet_prog_mobile.data.api.ApiException
 import com.example.projet_prog_mobile.data.api.user.UserRemoteDataSource
 import com.example.projet_prog_mobile.data.local.user.User
 import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
@@ -30,9 +30,8 @@ class UserRepositoryImpl(
                 email=user.email)
             userLocalDataSource.createUserEntity(userDetail)
             true
-        } catch (e: Exception){
-            Log.d("test","false")
-            false;
+        } catch (e: ApiException){
+            throw e
         }
 
 
@@ -43,6 +42,6 @@ class UserRepositoryImpl(
 
     override suspend fun registerUser(firstName: String, lastName: String, email: String, password: String): Boolean {
         val result = userRemoteDataSource.register(firstName, lastName, email, password)
-        return result.register;
+        return result.register
     }
 }
