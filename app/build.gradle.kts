@@ -59,6 +59,13 @@ android {
 
 dependencies {
 
+    //workers
+    val work_version = "2.8.1"
+
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+    implementation("com.google.accompanist:accompanist-permission:0.30.1")
+
+
     implementation("androidx.window:window:1.1.0")
     val room_version = "2.6.0"
     val hilt_version = "2.48.1"
