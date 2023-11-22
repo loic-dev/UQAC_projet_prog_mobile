@@ -20,6 +20,7 @@ fun Navigation(modifier: Modifier) {
     NavHost(navController = navController, startDestination = ScreenRoutes.SplashScreen.route){
         composable(ScreenRoutes.SplashScreen.route){
             SplashScreen(
+                modifier = modifier,
                 onLoginSuccessNavigation = {
                     navController.navigate(ScreenRoutes.HomeScreen.route){
                         popUpTo(0)
@@ -47,6 +48,7 @@ fun Navigation(modifier: Modifier) {
 
         composable(ScreenRoutes.RegisterScreen.route){
             RegisterScreen(
+                modifier = modifier,
                 onRegisterSuccessNavigation = {
                     navController.navigate(ScreenRoutes.LoginScreen.route){
                         popUpTo(0)
@@ -68,8 +70,8 @@ fun Navigation(modifier: Modifier) {
 }
 
 sealed class ScreenRoutes(val route:String){
-    object SplashScreen:ScreenRoutes("splash_screen")
-    object LoginScreen:ScreenRoutes("login_screen")
-    object RegisterScreen:ScreenRoutes("register_screen")
-    object HomeScreen:ScreenRoutes("home_screen")
+    data object SplashScreen:ScreenRoutes("splash_screen")
+    data object LoginScreen:ScreenRoutes("login_screen")
+    data object RegisterScreen:ScreenRoutes("register_screen")
+    data object HomeScreen:ScreenRoutes("home_screen")
 }

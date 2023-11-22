@@ -6,8 +6,19 @@ enum class EmailInputValidationType {
     Valid
 }
 
+enum class TextInputValidationType {
+    EmptyField,
+    Valid
+}
+
 enum class PasswordInputValidationType {
     EmptyField,
     NoPassword,
+    Valid
+}
+
+enum class PasswordConfirmInputValidationType {
+    EmptyField,
+    WrongPassword,
     Valid
 }

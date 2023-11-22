@@ -15,8 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val modifier = Modifier
-                .padding(resources.getDimension(R.dimen.screen_padding).toInt().dp)
+            val modifier = Modifier.padding(resources.getDimension(R.dimen.screen_padding).toInt().dp)
             Navigation(modifier)
         }
     }

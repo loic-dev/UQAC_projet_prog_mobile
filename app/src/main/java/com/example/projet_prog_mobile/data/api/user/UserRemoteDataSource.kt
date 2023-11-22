@@ -15,6 +15,6 @@ class UserRemoteDataSource @Inject constructor(
     }
 
     suspend fun register(firstName: String, lastName: String, email: String, password: String): UserRegisterResponse{
-        return handleApiCall { userApi.registerUser(firstName, lastName, email, password) }
+        return handleApiCall { userApi.registerUser(RegisterRequest(firstName, lastName, email, password)) }
     }
 }

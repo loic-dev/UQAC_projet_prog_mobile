@@ -33,15 +33,14 @@ class UserRepositoryImpl(
         } catch (e: ApiException){
             throw e
         }
-
-
-
     }
 
-
-
     override suspend fun registerUser(firstName: String, lastName: String, email: String, password: String): Boolean {
-        val result = userRemoteDataSource.register(firstName, lastName, email, password)
-        return result.register
+        return try {
+            userRemoteDataSource.register(firstName, lastName, email, password)
+            true
+        } catch (e: ApiException){
+            throw e
+        }
     }
 }
