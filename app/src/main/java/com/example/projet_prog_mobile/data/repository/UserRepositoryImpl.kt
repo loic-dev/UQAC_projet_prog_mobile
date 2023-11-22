@@ -5,30 +5,40 @@ import com.example.projet_prog_mobile.data.api.user.UserRemoteDataSource
 import com.example.projet_prog_mobile.data.local.user.User
 import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
 import com.example.projet_prog_mobile.domain.repository.UserRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class UserRepositoryImpl(
         private val userLocalDataSource: UserLocalDataSource,
-        private val userRemoteDataSource: UserRemoteDataSource
+        private val userRemoteDataSource: UserRemoteDataSource,
+        private val ioDispatcher: CoroutineDispatcher
 ) : UserRepository {
     override suspend fun authUser(): Boolean {
-        val token = userLocalDataSource.getUserEntity().token
-        var auth = false
-        if(token != null){
-            auth = userRemoteDataSource.auth(token).auth
+        return try {
+            val token = withContext(ioDispatcher) {
+                userLocalDataSource.getUserEntity().token
+            }
+            if (token != null) {
+                userRemoteDataSource.auth(token)
+            }
+            true
+        } catch (e: ApiException) {
+            false
         }
-        return auth
     }
     override suspend fun loginUser(email:String, password:String): Boolean {
         return try {
             val user =  userRemoteDataSource.login(email,password)
-            val userDetail = User(
-                uid = UUID.randomUUID().toString(),
-                token = user.token,
-                firstName = user.firstname,
-                lastName = user.lastname,
-                email=user.email)
-            userLocalDataSource.createUserEntity(userDetail)
+            withContext(ioDispatcher) {
+                val userDetail = User(
+                    uid = UUID.randomUUID().toString(),
+                    token = user.token,
+                    firstName = user.firstname,
+                    lastName = user.lastname,
+                    email=user.email)
+                userLocalDataSource.createUserEntity(userDetail)
+            }
             true
         } catch (e: ApiException){
             throw e

@@ -9,10 +9,10 @@ import retrofit2.http.POST
 interface UserApi {
 
     @GET("/api")
-    suspend fun authUser(@Header("Authorization") token: String): ApiResponse<UserAuthResponse>
+    suspend fun authUser(@Header("Authorization") token: String): ApiResponse<String>
 
     @POST("/register")
-    suspend fun registerUser(@Body request: RegisterRequest): ApiResponse<UserRegisterResponse>
+    suspend fun registerUser(@Body request: RegisterRequest): ApiResponse<String>
 
     @POST("/login")
     suspend fun loginUser(@Body request: LoginRequest): ApiResponse<UserLoginResponse>
