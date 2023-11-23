@@ -11,11 +11,15 @@ inline fun <reified T : Any> handleApiCall(call: () -> ApiResponse<T>): T {
     try {
         val response = call.invoke()
         Log.d("response", response.toString())
-        if(response.code in 200 until 300){
-            return response.message ?: throw ApiException("No value")
-        } else {
-            throw ApiException("${response.error}")
+        if(response.error !== null){
+            throw ApiException("Bad request: ${response.error}")
         }
+        if(response.message == null){
+            throw ApiException("No value")
+        }
+        return response.message
+    } catch (e: ApiException) {
+        throw e
     } catch (e: Exception) {
         Log.d("error", e.toString())
         throw ApiException("Unexpected error")
