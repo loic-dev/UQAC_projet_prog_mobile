@@ -1,4 +1,4 @@
-package com.example.projet_prog_mobile.presentation.screens.home_screen
+package com.example.projet_prog_mobile.presentation.screens.main_screen.home_screen
 
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
