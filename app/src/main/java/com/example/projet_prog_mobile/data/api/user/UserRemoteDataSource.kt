@@ -7,7 +7,7 @@ class UserRemoteDataSource @Inject constructor(
     private val userApi: UserApi,
 )  {
     suspend fun auth(localToken: String): String {
-        return handleApiCall { userApi.authUser(localToken) }
+        return handleApiCall { userApi.authUser("Bearer $localToken") }
     }
 
     suspend fun login(email:String, password:String): UserLoginResponse{

@@ -1,7 +1,6 @@
 package com.example.projet_prog_mobile.util
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
+
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -59,11 +58,8 @@ fun Navigation(modifier: Modifier) {
         }
 
         composable(ScreenRoutes.HomeScreen.route){
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                MainScreen()
+            Surface {
+                MainScreen(modifier)
             }
         }
     }

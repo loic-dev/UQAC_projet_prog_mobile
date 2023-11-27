@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -14,19 +15,19 @@ import com.example.projet_prog_mobile.presentation.screens.main_screen.profile_s
 import com.example.projet_prog_mobile.presentation.screens.main_screen.shop_screen.ShopScreen
 
 @Composable
-fun BottomNavBarGraph(navController: NavHostController){
+fun BottomNavBarGraph(modifier: Modifier, navController: NavHostController){
     NavHost(
         navController = navController,
         startDestination = BottomBar.Home.route)
     {
         composable(route = BottomBar.Home.route){
-            HomeScreen()
+            HomeScreen(modifier)
         }
         composable(route = BottomBar.Shop.route){
-            ShopScreen()
+            ShopScreen(modifier)
         }
         composable(route = BottomBar.Profile.route){
-            ProfileScreen()
+            ProfileScreen(modifier)
         }
     }
 }

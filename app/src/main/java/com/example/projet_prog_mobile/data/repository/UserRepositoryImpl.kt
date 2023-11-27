@@ -16,11 +16,11 @@ class UserRepositoryImpl(
 ) : UserRepository {
     override suspend fun authUser(): Boolean {
         return try {
-            val token = withContext(ioDispatcher) {
-                userLocalDataSource.getUserEntity().token
-            }
-            if (token != null) {
-                userRemoteDataSource.auth(token)
+            withContext(ioDispatcher) {
+                val userEntity = userLocalDataSource.getUserEntity()
+                if (userEntity != null) {
+                    userEntity.token?.let { userRemoteDataSource.auth(it) }
+                }
             }
             true
         } catch (e: ApiException) {
@@ -31,13 +31,18 @@ class UserRepositoryImpl(
         return try {
             val user =  userRemoteDataSource.login(email,password)
             withContext(ioDispatcher) {
+                val currentUser = userLocalDataSource.getUserEntity()
                 val userDetail = User(
                     uid = UUID.randomUUID().toString(),
                     token = user.token,
                     firstName = user.firstname,
                     lastName = user.lastname,
                     email=user.email)
-                userLocalDataSource.createUserEntity(userDetail)
+                if(currentUser != null){
+                    userLocalDataSource.updateUserEntity(userDetail)
+                } else {
+                    userLocalDataSource.createUserEntity(userDetail)
+                }
             }
             true
         } catch (e: ApiException){

@@ -13,13 +13,13 @@ import com.example.projet_prog_mobile.presentation.components.BottomBar
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
+fun MainScreen(modifier:Modifier){
     val navController = rememberNavController()
     Scaffold (
         modifier = Modifier.fillMaxSize(),
         bottomBar = { BottomBar(navController = navController) }
     ){
-        BottomNavBarGraph(navController = navController)
+        BottomNavBarGraph(modifier=modifier,navController = navController)
     }
 }
 
