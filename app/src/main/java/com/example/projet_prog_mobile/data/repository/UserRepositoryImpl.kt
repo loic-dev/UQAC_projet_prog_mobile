@@ -8,20 +8,16 @@ import com.example.projet_prog_mobile.domain.repository.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.UUID
+import javax.inject.Inject
 
-class UserRepositoryImpl(
+class UserRepositoryImpl @Inject constructor(
         private val userLocalDataSource: UserLocalDataSource,
         private val userRemoteDataSource: UserRemoteDataSource,
         private val ioDispatcher: CoroutineDispatcher
 ) : UserRepository {
     override suspend fun authUser(): Boolean {
         return try {
-            withContext(ioDispatcher) {
-                val userEntity = userLocalDataSource.getUserEntity()
-                if (userEntity != null) {
-                    userEntity.token?.let { userRemoteDataSource.auth(it) }
-                }
-            }
+            userRemoteDataSource.auth()
             true
         } catch (e: ApiException) {
             false
@@ -38,7 +34,7 @@ class UserRepositoryImpl(
                     firstName = user.firstname,
                     lastName = user.lastname,
                     email=user.email)
-                if(currentUser != null){
+                if(currentUser.token != null){
                     userLocalDataSource.updateUserEntity(userDetail)
                 } else {
                     userLocalDataSource.createUserEntity(userDetail)

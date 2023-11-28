@@ -6,8 +6,8 @@ import javax.inject.Inject
 class UserRemoteDataSource @Inject constructor(
     private val userApi: UserApi,
 )  {
-    suspend fun auth(localToken: String): String {
-        return handleApiCall { userApi.authUser("Bearer $localToken") }
+    suspend fun auth(): String {
+        return handleApiCall { userApi.authUser() }
     }
 
     suspend fun login(email:String, password:String): UserLoginResponse{

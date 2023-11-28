@@ -1,11 +1,15 @@
 package com.example.projet_prog_mobile.di
 
 import android.util.Log
+import com.example.projet_prog_mobile.data.api.AuthInterceptor
+import com.example.projet_prog_mobile.data.api.product.ProductApi
 import com.example.projet_prog_mobile.data.api.user.UserApi
+import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -17,10 +21,22 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideAuthInterceptor(
+        userLocalDataSource: UserLocalDataSource
+    ): Interceptor {
+        return AuthInterceptor(userLocalDataSource)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor { chain ->
                 val request: Request = chain.request()
                 Log.d("Retrofit", "Sending request " + request.url())
@@ -56,4 +72,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideUserAPI(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+    @Singleton
+    @Provides
+    fun provideProductAPI(retrofit: Retrofit): ProductApi = retrofit.create(ProductApi::class.java)
 }

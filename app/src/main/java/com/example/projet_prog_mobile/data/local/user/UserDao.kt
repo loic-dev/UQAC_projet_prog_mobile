@@ -9,7 +9,7 @@ import androidx.room.Update
 interface UserDao {
 
     @Query("SELECT * FROM user LIMIT 1")
-    fun getUserEntity(): User?
+    fun getUserEntity(): User
 
     @Update
     fun updateUserEntity(vararg user: User)
