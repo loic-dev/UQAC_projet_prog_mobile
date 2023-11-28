@@ -87,30 +87,30 @@ fun RegisterContainer(
                 ) {
 
                     AuthInputText(
-                        modifier= Modifier.weight(1f),
-                        value=firstNameValue,
+                        modifier = Modifier.weight(1f),
+                        value =firstNameValue,
                         onValueChanged = onFirstNameValueChanged,
                         placeholder = stringResource(R.string.firstname_input_placeholder),
                         keyboardType = KeyboardType.Ascii,
                         error = errorFirstname)
                     AuthInputText(
-                        modifier= Modifier.weight(1f),
-                        value=lastNameValue,
+                        modifier = Modifier.weight(1f),
+                        value =lastNameValue,
                         onValueChanged = onLastNameValueChanged,
                         placeholder = stringResource(R.string.lastname_input_placeholder),
                         keyboardType = KeyboardType.Ascii,
                         error = errorLastname)
                 }
                 AuthInputText(
-                    modifier= Modifier.fillMaxWidth(),
-                    value=emailValue,
+                    modifier = Modifier.fillMaxWidth(),
+                    value =emailValue,
                     onValueChanged = onEmailChanged,
                     placeholder = stringResource(id = R.string.email_input_placeholder),
                     keyboardType = KeyboardType.Ascii,
                     error = errorEmail)
                 AuthInputText(
-                    modifier= Modifier.fillMaxWidth(),
-                    value=passwordValue,
+                    modifier = Modifier.fillMaxWidth(),
+                    value =passwordValue,
                     onValueChanged = onPasswordChanged,
                     placeholder = stringResource(id = R.string.password_input_placeholder),
                     keyboardType = KeyboardType.Password,
@@ -130,8 +130,8 @@ fun RegisterContainer(
                         }
                     })
                 AuthInputText(
-                    modifier= Modifier.fillMaxWidth(),
-                    value=passwordConfirmValue,
+                    modifier = Modifier.fillMaxWidth(),
+                    value =passwordConfirmValue,
                     onValueChanged = onPasswordConfirmChanged,
                     placeholder = stringResource(R.string.confirm_password_input_placeholder),
                     keyboardType = KeyboardType.Password,

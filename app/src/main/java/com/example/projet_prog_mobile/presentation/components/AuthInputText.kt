@@ -21,7 +21,7 @@ import com.example.projet_prog_mobile.R
 @Composable
 fun AuthInputText(
     modifier: Modifier,
-    value:()->String,
+    value: () -> String,
     placeholder:String,
     visualTransformation:VisualTransformation? = VisualTransformation.None,
     keyboardType: KeyboardType,

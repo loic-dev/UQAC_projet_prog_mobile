@@ -5,7 +5,7 @@ import javax.inject.Inject
 class UserLocalDataSource @Inject constructor(
     private val userDao: UserDao
 ) {
-    fun getUserEntity(): User? {
+    fun getUserEntity(): User {
         return userDao.getUserEntity()
     }
 
@@ -15,5 +15,9 @@ class UserLocalDataSource @Inject constructor(
 
     fun createUserEntity(user:User){
         userDao.createUserEntity(user)
+    }
+
+    fun deleteUserEntity(){
+        userDao.deleteUserEntity()
     }
 }

@@ -23,4 +23,9 @@
     <string name="register_page_button_signup">Sign Up</string>
     <string name="register_page_link_to_login_question">"Already have an account ? "</string>
     <string name="register_page_link_to_login_text">Sign In</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_firstname">First Name</string>
+    <string name="profile_lastname">Last Name</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_logout">Log out</string>
 </resources>

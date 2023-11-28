@@ -27,7 +27,7 @@ fun BottomNavBarGraph(modifier: Modifier, navController: NavHostController){
             ShopScreen(modifier)
         }
         composable(route = BottomBar.Profile.route){
-            ProfileScreen(modifier)
+            ProfileScreen(modifier, navController)
         }
     }
 }

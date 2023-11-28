@@ -62,15 +62,15 @@ fun LoginContainer(
             )
         }
         AuthInputText(
-            modifier= Modifier.fillMaxWidth(),
-            value=emailValue,
+            modifier = Modifier.fillMaxWidth(),
+            value =emailValue,
             onValueChanged = onEmailChanged,
             placeholder = stringResource(id = R.string.email_input_placeholder),
             keyboardType = KeyboardType.Ascii,
             error = errorEmail)
         AuthInputText(
-            modifier= Modifier.fillMaxWidth(),
-            value=passwordValue,
+            modifier = Modifier.fillMaxWidth(),
+            value =passwordValue,
             onValueChanged = onPasswordChanged,
             placeholder = stringResource(id = R.string.password_input_placeholder),
             keyboardType = KeyboardType.Password,

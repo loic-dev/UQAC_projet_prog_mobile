@@ -58,4 +58,20 @@ class UserRepositoryImpl(
             throw e
         }
     }
+
+    override suspend fun getUser(): User {
+        return try {
+            userLocalDataSource.getUserEntity()
+        } catch (e: Exception){
+            throw e
+        }
+    }
+
+    override suspend fun logout() {
+        return try {
+            userLocalDataSource.deleteUserEntity()
+        } catch (e: Exception){
+            throw e
+        }
+    }
 }
