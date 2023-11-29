@@ -3,6 +3,7 @@ package com.example.projet_prog_mobile.di
 import android.content.Context
 import androidx.room.Room
 import com.example.projet_prog_mobile.data.local.AppDatabase
+import com.example.projet_prog_mobile.data.local.product.ProductDao
 import com.example.projet_prog_mobile.data.local.user.UserDao
 import dagger.Module
 import dagger.Provides
@@ -30,6 +31,12 @@ object DatabaseModule {
     @Singleton
     fun provideUserDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductDao(appDatabase: AppDatabase): ProductDao {
+        return appDatabase.productDao()
     }
 
     @Provides

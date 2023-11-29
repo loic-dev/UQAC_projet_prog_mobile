@@ -15,12 +15,14 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,14 +35,20 @@ import com.example.projet_prog_mobile.R
 import com.example.projet_prog_mobile.presentation.components.ScanSheet
 import com.example.projet_prog_mobile.presentation.state.ScannerState
 
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ScannerContainer(
     bottomSheetState: ModalBottomSheetState,
     uiState: ScannerState,
+    notificationMessage:String?,
+    clearNotification:()->Unit,
+    addProductToShop: () -> Unit,
+    onChangeQuantity:(Int) -> Unit,
     hideBottomSheet:()->Unit,
     backShoppingPage:()->Unit,
 ) {
+
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetShape = RoundedCornerShape(
@@ -82,7 +90,10 @@ fun ScannerContainer(
                         uiState.product?.let {
                             ScanSheet(
                                 product = it,
-                                modifier = Modifier
+                                modifier = Modifier,
+                                onChangeQuantity = onChangeQuantity,
+                                hideBottomSheet = { hideBottomSheet() },
+                                addProductToShop = { addProductToShop() }
                             )
                         } ?: Text(
                             text = uiState.error.toString(),
@@ -104,11 +115,30 @@ fun ScannerContainer(
                 .background(color = Color.Black)
         ) {
             if (uiState.previewView != null) {
+                if (notificationMessage != null) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            clearNotification()
+                        },
+                        title = {
+                            Text(text = notificationMessage)
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                clearNotification()
+                            }) {
+                                Text("OK")
+                            }
+                        }
+                    )
+                }
                 AndroidView(
                     factory = { uiState.previewView },
                     modifier = Modifier.fillMaxSize()
                 )
+
             }
+
             if(!bottomSheetState.isVisible){
                 Box(
                     modifier = Modifier

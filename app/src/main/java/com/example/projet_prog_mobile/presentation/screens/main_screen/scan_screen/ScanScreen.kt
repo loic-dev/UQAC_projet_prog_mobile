@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -40,6 +41,8 @@ fun ScanScreen(
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val uiState by scannerViewModel.scannerState.collectAsState()
+    val notificationMessage by scannerViewModel.notificationMessage.observeAsState()
+
 
     val hapticFeedback = LocalHapticFeedback.current
     val activity = remember(context) {
@@ -101,11 +104,16 @@ fun ScanScreen(
     }
 
 
+
     ScannerContainer(
         bottomSheetState = bottomSheetState,
         uiState = uiState,
+        notificationMessage=notificationMessage,
+        clearNotification=scannerViewModel::clearNotification,
+        onChangeQuantity= scannerViewModel::changeProductQuantity,
         hideBottomSheet={ coroutineScope.launch { if (bottomSheetState.isVisible) bottomSheetState.hide() }},
-        backShoppingPage = {navController.navigateUp()}
+        backShoppingPage = {navController.navigateUp()},
+        addProductToShop = scannerViewModel::addProductToWorker
     )
 
 

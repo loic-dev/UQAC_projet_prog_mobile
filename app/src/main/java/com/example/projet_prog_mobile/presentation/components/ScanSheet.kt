@@ -3,25 +3,25 @@ package com.example.projet_prog_mobile.presentation.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.projet_prog_mobile.R
-import com.example.projet_prog_mobile.data.api.product.ProductItem
+import com.example.projet_prog_mobile.data.local.product.Product
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScanSheet(
-    product: ProductItem,
+    product: Product,
+    onChangeQuantity:(Int)->Unit,
+    hideBottomSheet:()->Unit,
+    addProductToShop:()->Unit,
     modifier: Modifier = Modifier,
 ) {
-    val averagePrice = (product.lowest_recorded_price+product.highest_recorded_price)/2
-    var selectedQuantity by remember { mutableIntStateOf(1) }
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -33,7 +33,7 @@ fun ScanSheet(
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Price : $averagePrice $",
+            text = "Price : ${product.price} $",
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Medium
         )
@@ -44,10 +44,8 @@ fun ScanSheet(
         ) {
             Text("Quantity:")
             Slider(
-                value = selectedQuantity.toFloat(),
-                onValueChange = {
-                    selectedQuantity = it.toInt()
-                },
+                value = product.quantity.toFloat(),
+                onValueChange = { onChangeQuantity(it.toInt()) },
                 valueRange = 1f..10f,
                 steps = 10,
                 modifier = Modifier.weight(1f),
@@ -56,10 +54,15 @@ fun ScanSheet(
                     activeTrackColor = colorResource(id = R.color.main_pink)
                 )
             )
-            Text(selectedQuantity.toString())
+            Text(product.quantity.toString())
         }
         Button(
-            onClick = { },
+            onClick = {
+                coroutineScope.launch {
+                    addProductToShop()
+                    hideBottomSheet()
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),

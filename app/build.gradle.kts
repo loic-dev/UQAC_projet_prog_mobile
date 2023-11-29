@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.3.0")
     implementation("androidx.camera:camera-view:1.3.0")
     implementation("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0")
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
     val room_version = "2.6.0"
     val hilt_version = "2.48.1"
 
@@ -82,7 +83,9 @@ dependencies {
     //Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation("androidx.hilt:hilt-work:1.0.0")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+
     kapt("androidx.hilt:hilt-compiler:1.1.0")
 
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")

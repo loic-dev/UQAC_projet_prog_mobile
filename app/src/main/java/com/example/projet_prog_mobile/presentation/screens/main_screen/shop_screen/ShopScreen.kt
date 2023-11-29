@@ -8,16 +8,26 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.projet_prog_mobile.R
+import com.example.projet_prog_mobile.presentation.viewModel.ShopViewModel
 
 @Composable
 fun ShopScreen(modifier: Modifier,
-               navController: NavHostController) {
+               navController: NavHostController,
+               shopViewModel: ShopViewModel = hiltViewModel()
+) {
+
+    LaunchedEffect(true) {
+        shopViewModel.onLoad()
+    }
+
     Column(modifier=modifier) {
         Text(text = "SHOPPING",
             style = MaterialTheme.typography.titleLarge.copy(
@@ -38,5 +48,9 @@ fun ShopScreen(modifier: Modifier,
         ) {
             Text("Scanning", color= colorResource(id = R.color.white))
         }
+
+        Text(text = shopViewModel.shopState.products.toString())
+
+
     }
 }
