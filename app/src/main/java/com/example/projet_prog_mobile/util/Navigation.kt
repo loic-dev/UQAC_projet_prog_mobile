@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projet_prog_mobile.presentation.screens.MainScreen
 import com.example.projet_prog_mobile.presentation.screens.SplashScreen
 import com.example.projet_prog_mobile.presentation.screens.login_screen.LoginScreen
+import com.example.projet_prog_mobile.presentation.screens.main_screen.scan_screen.ScanScreen
 import com.example.projet_prog_mobile.presentation.screens.register_screen.RegisterScreen
 
 @Composable
@@ -62,6 +63,12 @@ fun Navigation(modifier: Modifier) {
                 MainScreen(modifier, navController)
             }
         }
+
+        composable(ScreenRoutes.ScanScreen.route){
+            Surface {
+                ScanScreen(navController = navController)
+            }
+        }
     }
 }
 
@@ -70,4 +77,5 @@ sealed class ScreenRoutes(val route:String){
     data object LoginScreen:ScreenRoutes("login_screen")
     data object RegisterScreen:ScreenRoutes("register_screen")
     data object HomeScreen:ScreenRoutes("home_screen")
+    data object ScanScreen:ScreenRoutes("scan_screen")
 }

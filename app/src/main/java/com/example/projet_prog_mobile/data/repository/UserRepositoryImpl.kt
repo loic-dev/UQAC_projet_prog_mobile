@@ -8,40 +8,32 @@ import com.example.projet_prog_mobile.domain.repository.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.UUID
+import javax.inject.Inject
 
-class UserRepositoryImpl(
+class UserRepositoryImpl @Inject constructor(
         private val userLocalDataSource: UserLocalDataSource,
         private val userRemoteDataSource: UserRemoteDataSource,
         private val ioDispatcher: CoroutineDispatcher
 ) : UserRepository {
     override suspend fun authUser(): Boolean {
         return try {
-            withContext(ioDispatcher) {
-                val userEntity = userLocalDataSource.getUserEntity()
-                if (userEntity.token != null) {
-                    userEntity.token.let { userRemoteDataSource.auth(it) }
-                    true
-                }
-                else {
-                    false
-                }
-            }
-           // true
+            userRemoteDataSource.auth()
+            true
         } catch (e: ApiException) {
             false
         }
     }
     override suspend fun loginUser(email:String, password:String): Boolean {
         return try {
-            val response =  userRemoteDataSource.login(email,password)
+            val loginResponse =  userRemoteDataSource.login(email,password)
             withContext(ioDispatcher) {
                 val currentUser = userLocalDataSource.getUserEntity()
                 val userDetail = User(
                     uid = UUID.randomUUID().toString(),
-                    token = response.token,
-                    firstName = response.user.firstname,
-                    lastName = response.user.lastname,
-                    email= response.user.email)
+                    token = loginResponse.token,
+                    firstName = loginResponse.user.firstname,
+                    lastName = loginResponse.user.lastname,
+                    email=loginResponse.user.email)
                 if(currentUser != null){
                     userLocalDataSource.updateUserEntity(userDetail)
                 } else {
