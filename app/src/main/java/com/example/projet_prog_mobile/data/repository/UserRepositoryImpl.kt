@@ -25,16 +25,16 @@ class UserRepositoryImpl @Inject constructor(
     }
     override suspend fun loginUser(email:String, password:String): Boolean {
         return try {
-            val user =  userRemoteDataSource.login(email,password)
+            val loginResponse =  userRemoteDataSource.login(email,password)
             withContext(ioDispatcher) {
                 val currentUser = userLocalDataSource.getUserEntity()
                 val userDetail = User(
                     uid = UUID.randomUUID().toString(),
-                    token = user.token,
-                    firstName = user.firstname,
-                    lastName = user.lastname,
-                    email=user.email)
-                if(currentUser.token != null){
+                    token = loginResponse.token,
+                    firstName = loginResponse.user.firstname,
+                    lastName = loginResponse.user.lastname,
+                    email=loginResponse.user.email)
+                if(currentUser != null){
                     userLocalDataSource.updateUserEntity(userDetail)
                 } else {
                     userLocalDataSource.createUserEntity(userDetail)
