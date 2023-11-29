@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -104,9 +105,11 @@ fun LoginContainer(
             )
             Text(
                 text = stringResource(R.string.login_page_link_to_signup_text),
-                modifier = Modifier.clickable {
+                modifier = Modifier
+                    .clickable {
                     navController.navigate("register_screen")
-                },
+                    }
+                    .padding(start = 10.dp),
                 color = colorResource(id = R.color.main_pink)
             )
         }

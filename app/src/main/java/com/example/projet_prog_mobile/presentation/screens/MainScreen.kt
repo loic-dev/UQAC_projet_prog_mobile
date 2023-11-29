@@ -7,19 +7,22 @@ import com.example.projet_prog_mobile.util.BottomNavBarGraph
 import android.annotation.SuppressLint
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projet_prog_mobile.presentation.components.BottomBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(modifier:Modifier){
-    val navController = rememberNavController()
+fun MainScreen(modifier:Modifier, navController: NavHostController){
+    val navBarController = rememberNavController()
     Scaffold (
         modifier = Modifier.fillMaxSize(),
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = { BottomBar(navBarController = navBarController) }
     ){
-        BottomNavBarGraph(modifier=modifier,navController = navController)
+        BottomNavBarGraph(modifier=modifier,
+            navBarController = navBarController,
+            navController = navController)
     }
 }
 

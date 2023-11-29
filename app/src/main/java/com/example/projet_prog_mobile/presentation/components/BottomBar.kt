@@ -16,21 +16,21 @@ import com.example.projet_prog_mobile.util.BottomBar
 import com.example.projet_prog_mobile.R
 
 @Composable
-fun BottomBar(navController: NavHostController){
+fun BottomBar(navBarController: NavHostController){
     val screens = listOf(
         BottomBar.Home,
         BottomBar.Shop,
         BottomBar.Profile
     )
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val navBackStackEntry by navBarController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     BottomNavigation(
         backgroundColor= colorResource(id = R.color.light_grey)
     ){
         screens.forEach { screen ->
-            AddItem(screen = screen, currentDestination = currentDestination, navController = navController)
+            AddItem(screen = screen, currentDestination = currentDestination, navBarController = navBarController)
         }
     }
 
@@ -40,7 +40,7 @@ fun BottomBar(navController: NavHostController){
 fun RowScope.AddItem(
     screen: BottomBar,
     currentDestination: NavDestination?,
-    navController: NavHostController
+    navBarController: NavHostController
 ){
     BottomNavigationItem(
         selectedContentColor = colorResource(id = R.color.main_pink),
@@ -60,7 +60,7 @@ fun RowScope.AddItem(
             it.route == screen.route
         } == true,
         onClick = {
-            navController.navigate(screen.route)
+            navBarController.navigate(screen.route)
         }
     )
 }

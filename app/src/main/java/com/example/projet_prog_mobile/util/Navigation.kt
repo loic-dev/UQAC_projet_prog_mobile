@@ -59,7 +59,7 @@ fun Navigation(modifier: Modifier) {
 
         composable(ScreenRoutes.HomeScreen.route){
             Surface {
-                MainScreen(modifier)
+                MainScreen(modifier, navController)
             }
         }
     }

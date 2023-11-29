@@ -48,7 +48,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.111:8000/")
+            .baseUrl("http://192.168.1.122:8000/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

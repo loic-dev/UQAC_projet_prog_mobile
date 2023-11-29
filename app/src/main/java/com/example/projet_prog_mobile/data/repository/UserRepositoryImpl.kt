@@ -18,26 +18,30 @@ class UserRepositoryImpl(
         return try {
             withContext(ioDispatcher) {
                 val userEntity = userLocalDataSource.getUserEntity()
-                if (userEntity != null) {
-                    userEntity.token?.let { userRemoteDataSource.auth(it) }
+                if (userEntity.token != null) {
+                    userEntity.token.let { userRemoteDataSource.auth(it) }
+                    true
+                }
+                else {
+                    false
                 }
             }
-            true
+           // true
         } catch (e: ApiException) {
             false
         }
     }
     override suspend fun loginUser(email:String, password:String): Boolean {
         return try {
-            val user =  userRemoteDataSource.login(email,password)
+            val response =  userRemoteDataSource.login(email,password)
             withContext(ioDispatcher) {
                 val currentUser = userLocalDataSource.getUserEntity()
                 val userDetail = User(
                     uid = UUID.randomUUID().toString(),
-                    token = user.token,
-                    firstName = user.firstname,
-                    lastName = user.lastname,
-                    email=user.email)
+                    token = response.token,
+                    firstName = response.user.firstname,
+                    lastName = response.user.lastname,
+                    email= response.user.email)
                 if(currentUser != null){
                     userLocalDataSource.updateUserEntity(userDetail)
                 } else {
@@ -61,7 +65,9 @@ class UserRepositoryImpl(
 
     override suspend fun getUser(): User {
         return try {
-            userLocalDataSource.getUserEntity()
+            withContext(ioDispatcher) {
+                userLocalDataSource.getUserEntity()
+            }
         } catch (e: Exception){
             throw e
         }
@@ -69,7 +75,9 @@ class UserRepositoryImpl(
 
     override suspend fun logout() {
         return try {
-            userLocalDataSource.deleteUserEntity()
+            withContext(ioDispatcher) {
+                userLocalDataSource.deleteUserEntity()
+            }
         } catch (e: Exception){
             throw e
         }

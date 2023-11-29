@@ -15,9 +15,11 @@ import com.example.projet_prog_mobile.presentation.screens.main_screen.profile_s
 import com.example.projet_prog_mobile.presentation.screens.main_screen.shop_screen.ShopScreen
 
 @Composable
-fun BottomNavBarGraph(modifier: Modifier, navController: NavHostController){
+fun BottomNavBarGraph(modifier: Modifier,
+                      navBarController: NavHostController,
+                      navController: NavHostController){
     NavHost(
-        navController = navController,
+        navController = navBarController,
         startDestination = BottomBar.Home.route)
     {
         composable(route = BottomBar.Home.route){

@@ -2,7 +2,7 @@ package com.example.projet_prog_mobile.presentation.state
 
 data class ProfileState(
     val errorMessageApi: String? = null,
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val logoutSuccess: Boolean = false,
     val firstname: String = "",
     val lastname: String = "",
