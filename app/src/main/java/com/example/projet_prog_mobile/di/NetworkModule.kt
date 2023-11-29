@@ -30,7 +30,6 @@ object NetworkModule {
         return AuthInterceptor(userLocalDataSource)
     }
 
-
     @Singleton
     @Provides
     fun provideOkHttpClient(
@@ -40,15 +39,13 @@ object NetworkModule {
             .addInterceptor { chain ->
                 val request: Request = chain.request()
                 Log.d("Retrofit", "Sending request " + request.url())
-
                 try {
                     val response: Response = chain.proceed(request)
                     Log.d("Retrofit", "Received response for " + response.request().url())
                     response
                 } catch (e: Exception) {
-                    // Gérez l'exception ici
                     Log.e("Retrofit", "Request failed with exception: ${e.message}")
-                    throw e // Propagez l'exception après la gestion
+                    throw e
                 }
             }
             .build()

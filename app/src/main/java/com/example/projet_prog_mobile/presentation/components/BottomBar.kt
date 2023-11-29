@@ -16,21 +16,21 @@ import com.example.projet_prog_mobile.util.BottomBar
 import com.example.projet_prog_mobile.R
 
 @Composable
-fun BottomBar(navController: NavHostController){
+fun BottomBar(navBottomController: NavHostController){
     val screens = listOf(
         BottomBar.Home,
         BottomBar.Shop,
         BottomBar.Profile
     )
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val navBackStackEntry by navBottomController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     BottomNavigation(
         backgroundColor= colorResource(id = R.color.light_grey)
     ){
         screens.forEach { screen ->
-            AddItem(screen = screen, currentDestination = currentDestination, navController = navController)
+            AddItem(screen = screen, currentDestination = currentDestination, navController = navBottomController)
         }
     }
 

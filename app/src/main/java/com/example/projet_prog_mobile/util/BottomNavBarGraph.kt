@@ -15,16 +15,19 @@ import com.example.projet_prog_mobile.presentation.screens.main_screen.profile_s
 import com.example.projet_prog_mobile.presentation.screens.main_screen.shop_screen.ShopScreen
 
 @Composable
-fun BottomNavBarGraph(modifier: Modifier, navController: NavHostController){
+fun BottomNavBarGraph(
+    modifier: Modifier,
+    navBottomController: NavHostController,
+    navController:NavHostController){
     NavHost(
-        navController = navController,
+        navController = navBottomController,
         startDestination = BottomBar.Home.route)
     {
         composable(route = BottomBar.Home.route){
             HomeScreen(modifier)
         }
         composable(route = BottomBar.Shop.route){
-            ShopScreen(modifier)
+            ShopScreen(modifier, navController)
         }
         composable(route = BottomBar.Profile.route){
             ProfileScreen(modifier)
