@@ -61,7 +61,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.122:8000/")
+            .baseUrl("https://uqac-projet-prog-mobile-api.fly.dev/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

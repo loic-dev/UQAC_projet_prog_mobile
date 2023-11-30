@@ -14,7 +14,7 @@ class AuthInterceptor @Inject constructor(
         val modifiedRequest = when {
             shouldAddToken(request) -> {
                 val user = userLocalDataSource.getUserEntity()
-                if (user != null) {
+                if (user.token != null) {
                     val token = user.token
                     request.newBuilder()
                         .header("Authorization", "Bearer $token")
@@ -30,6 +30,6 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun shouldAddToken(request: Request): Boolean {
-        return request.url().toString().startsWith("http://192.168.1.111:8000/api")
+        return request.url().toString().startsWith("https://uqac-projet-prog-mobile-api.fly.dev/api")
     }
 }
