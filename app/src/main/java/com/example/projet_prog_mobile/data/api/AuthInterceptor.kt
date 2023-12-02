@@ -17,7 +17,7 @@ class AuthInterceptor @Inject constructor(
         val modifiedRequest = when {
             shouldAddToken(request) -> {
                 val user = userLocalDataSource.getUserEntity()
-                if (user.token != null) {
+                if (user != null) {
                     val token = user.token
                     request.newBuilder()
                         .header("Authorization", "Bearer $token")

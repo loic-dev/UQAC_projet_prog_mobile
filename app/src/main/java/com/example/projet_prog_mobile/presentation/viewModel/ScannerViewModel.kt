@@ -1,6 +1,6 @@
 package com.example.projet_prog_mobile.presentation.viewModel
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +18,6 @@ import com.example.projet_prog_mobile.domain.repository.ScanRepository
 import com.example.projet_prog_mobile.presentation.state.ScannerState
 import com.example.projet_prog_mobile.util.ShopWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -31,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ScannerViewModel @Inject constructor(
     private val scanRepository: ScanRepository,
-    @ApplicationContext private val application: Application
+    private val context: Context
 ): ViewModel() {
 
     private val vmState = MutableStateFlow(ScannerState())
@@ -131,15 +130,15 @@ class ScannerViewModel @Inject constructor(
             )
             .setConstraints(constraints)
             .build()
-         val workManager = WorkManager.getInstance(application)
+         val workManager = WorkManager.getInstance(context)
          workManager.enqueue(workerRequest)
          val workInfoLiveData = workManager.getWorkInfoByIdLiveData(workerRequest.id)
          workInfoLiveData.observeForever { workInfo ->
              if (workInfo != null && workInfo.state.isFinished) {
                      _notificationMessage.value =
-                         application.getString(R.string.scan_screen_product_added_to_shop_success_notif)
+                         context.getString(R.string.scan_screen_product_added_to_shop_success_notif)
                  } else {
-                    _notificationMessage.value = application.getString(R.string.scan_screen_product_added_to_shop_error_notif)
+                    _notificationMessage.value = context.getString(R.string.scan_screen_product_added_to_shop_error_notif)
                  }
              }
          }

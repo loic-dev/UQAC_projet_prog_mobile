@@ -55,7 +55,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUser(): User {
+    override suspend fun getUser(): User? {
         return try {
             withContext(ioDispatcher) {
                 userLocalDataSource.getUserEntity()

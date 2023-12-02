@@ -24,12 +24,14 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val user = userRepository.getUser()
-                Log.d("User : ", user.toString())
-                profileState = profileState.copy(
-                    firstname = user.firstName.toString(),
-                    lastname = user.lastName.toString(),
-                    email = user.email.toString(),
-                )
+                if(user !== null){
+                    Log.d("User : ", user.toString())
+                    profileState = profileState.copy(
+                        firstname = user.firstName.toString(),
+                        lastname = user.lastName.toString(),
+                        email = user.email.toString(),
+                    )
+                }
             } catch (e: Exception) {
                 profileState = profileState.copy(errorMessageApi = e.message)
             } finally {

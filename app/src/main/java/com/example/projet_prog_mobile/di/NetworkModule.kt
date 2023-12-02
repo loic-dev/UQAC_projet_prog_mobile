@@ -1,6 +1,5 @@
 package com.example.projet_prog_mobile.di
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.example.projet_prog_mobile.R
@@ -11,7 +10,6 @@ import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -64,10 +62,10 @@ object NetworkModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory,
-        @ApplicationContext application: Application
+        context: Context
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(application.getString(R.string.api_url))
+            .baseUrl(context.getString(R.string.api_url))
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
