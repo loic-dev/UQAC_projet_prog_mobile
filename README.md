@@ -2,5 +2,5 @@
 
 SDK: API 34
 
-TP2 - BOTTOM BAR :
- - Lien tutoriel utilisé : https://www.youtube.com/watch?v=gg-KBGH9T8s
+### DEV:
+Change url_api string ressource in strings.xml
