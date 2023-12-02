@@ -1,6 +1,9 @@
 package com.example.projet_prog_mobile.di
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import com.example.projet_prog_mobile.R
 import com.example.projet_prog_mobile.data.api.AuthInterceptor
 import com.example.projet_prog_mobile.data.api.product.ProductApi
 import com.example.projet_prog_mobile.data.api.user.UserApi
@@ -8,6 +11,7 @@ import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -25,9 +29,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideAuthInterceptor(
-        userLocalDataSource: UserLocalDataSource
+        userLocalDataSource: UserLocalDataSource,
+        context: Context
     ): Interceptor {
-        return AuthInterceptor(userLocalDataSource)
+        return AuthInterceptor(userLocalDataSource,context)
     }
 
     @Singleton
@@ -58,14 +63,16 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+        gsonConverterFactory: GsonConverterFactory,
+        @ApplicationContext application: Application
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://uqac-projet-prog-mobile-api.fly.dev/")
+            .baseUrl(application.getString(R.string.api_url))
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }
+
     @Singleton
     @Provides
     fun provideUserAPI(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)

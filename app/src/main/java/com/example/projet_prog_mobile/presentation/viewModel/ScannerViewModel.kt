@@ -1,6 +1,6 @@
 package com.example.projet_prog_mobile.presentation.viewModel
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,12 +11,14 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.example.projet_prog_mobile.R
 import com.example.projet_prog_mobile.data.api.ApiException
 import com.example.projet_prog_mobile.data.local.product.Product
 import com.example.projet_prog_mobile.domain.repository.ScanRepository
 import com.example.projet_prog_mobile.presentation.state.ScannerState
 import com.example.projet_prog_mobile.util.ShopWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ScannerViewModel @Inject constructor(
     private val scanRepository: ScanRepository,
-    private val context: Context
+    @ApplicationContext private val application: Application
 ): ViewModel() {
 
     private val vmState = MutableStateFlow(ScannerState())
@@ -129,14 +131,15 @@ class ScannerViewModel @Inject constructor(
             )
             .setConstraints(constraints)
             .build()
-         val workManager = WorkManager.getInstance(context)
+         val workManager = WorkManager.getInstance(application)
          workManager.enqueue(workerRequest)
          val workInfoLiveData = workManager.getWorkInfoByIdLiveData(workerRequest.id)
          workInfoLiveData.observeForever { workInfo ->
              if (workInfo != null && workInfo.state.isFinished) {
-                     _notificationMessage.value = "Product added"
+                     _notificationMessage.value =
+                         application.getString(R.string.scan_screen_product_added_to_shop_success_notif)
                  } else {
-                    _notificationMessage.value = "Error while product adding"
+                    _notificationMessage.value = application.getString(R.string.scan_screen_product_added_to_shop_error_notif)
                  }
              }
          }

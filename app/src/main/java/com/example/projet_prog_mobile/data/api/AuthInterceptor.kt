@@ -1,13 +1,16 @@
 package com.example.projet_prog_mobile.data.api
 
+import android.content.Context
 import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import javax.inject.Inject
+import com.example.projet_prog_mobile.R
 
 class AuthInterceptor @Inject constructor(
-    private val userLocalDataSource: UserLocalDataSource
+    private val userLocalDataSource: UserLocalDataSource,
+    private val context: Context
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -30,6 +33,7 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun shouldAddToken(request: Request): Boolean {
-        return request.url().toString().startsWith("https://uqac-projet-prog-mobile-api.fly.dev/api")
+        val apiUrl = context.getString(R.string.api_url)+"/api"
+        return request.url().toString().startsWith(apiUrl)
     }
 }

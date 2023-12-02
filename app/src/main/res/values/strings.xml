@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">projet_prog_mobile</string>
+    <string name="api_url">https://uqac-projet-prog-mobile-api.fly.dev</string>
+
     <string name="splash">SplashScreen</string>
     <string name="main">MainActivity</string>
     <string name="hide_password">hide</string>
@@ -57,4 +59,6 @@
     <string name="scan_format_upc_a">Barcode UPC-A</string>
     <string name="scan_format_upc_e">Barcode UPC-E</string>
     <string name="scan_format_unknown">Code</string>
+    <string name="scan_screen_product_added_to_shop_success_notif">Product added</string>
+    <string name="scan_screen_product_added_to_shop_error_notif">\"Error while product adding\"</string>
 </resources>
