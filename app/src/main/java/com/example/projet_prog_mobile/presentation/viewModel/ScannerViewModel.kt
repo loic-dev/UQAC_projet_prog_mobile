@@ -1,6 +1,6 @@
 package com.example.projet_prog_mobile.presentation.viewModel
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ScannerViewModel @Inject constructor(
     private val scanRepository: ScanRepository,
-    private val context: Context
+    private val application: Application
 ): ViewModel() {
 
     private val vmState = MutableStateFlow(ScannerState())
@@ -130,15 +130,15 @@ class ScannerViewModel @Inject constructor(
             )
             .setConstraints(constraints)
             .build()
-         val workManager = WorkManager.getInstance(context)
+         val workManager = WorkManager.getInstance(application)
          workManager.enqueue(workerRequest)
          val workInfoLiveData = workManager.getWorkInfoByIdLiveData(workerRequest.id)
          workInfoLiveData.observeForever { workInfo ->
              if (workInfo != null && workInfo.state.isFinished) {
                      _notificationMessage.value =
-                         context.getString(R.string.scan_screen_product_added_to_shop_success_notif)
+                         application.getString(R.string.scan_screen_product_added_to_shop_success_notif)
                  } else {
-                    _notificationMessage.value = context.getString(R.string.scan_screen_product_added_to_shop_error_notif)
+                    _notificationMessage.value = application.getString(R.string.scan_screen_product_added_to_shop_error_notif)
                  }
              }
          }
