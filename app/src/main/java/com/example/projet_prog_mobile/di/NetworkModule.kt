@@ -41,10 +41,10 @@ object NetworkModule {
             .addInterceptor(authInterceptor)
             .addInterceptor { chain ->
                 val request: Request = chain.request()
-                Log.d("Retrofit", "Sending request " + request.url())
+                Log.d("Retrofit", "Sending request " + request.url)
                 try {
                     val response: Response = chain.proceed(request)
-                    Log.d("Retrofit", "Received response for " + response.request().url())
+                    Log.d("Retrofit", "Received response for " + response.request.url)
                     response
                 } catch (e: Exception) {
                     Log.e("Retrofit", "Request failed with exception: ${e.message}")

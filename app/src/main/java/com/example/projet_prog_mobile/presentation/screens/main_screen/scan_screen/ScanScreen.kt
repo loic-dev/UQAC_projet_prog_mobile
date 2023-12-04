@@ -111,6 +111,7 @@ fun ScanScreen(
         notificationMessage=notificationMessage,
         clearNotification=scannerViewModel::clearNotification,
         onChangeQuantity= scannerViewModel::changeProductQuantity,
+        onChangePrice = scannerViewModel::changeProductPrice,
         hideBottomSheet={ coroutineScope.launch { if (bottomSheetState.isVisible) bottomSheetState.hide() }},
         backShoppingPage = {navController.navigateUp()},
         addProductToShop = scannerViewModel::addProductToWorker

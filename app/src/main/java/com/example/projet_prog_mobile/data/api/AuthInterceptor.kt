@@ -34,6 +34,6 @@ class AuthInterceptor @Inject constructor(
 
     private fun shouldAddToken(request: Request): Boolean {
         val apiUrl = context.getString(R.string.api_url)+"/api"
-        return request.url().toString().startsWith(apiUrl)
+        return request.url.toString().startsWith(apiUrl)
     }
 }

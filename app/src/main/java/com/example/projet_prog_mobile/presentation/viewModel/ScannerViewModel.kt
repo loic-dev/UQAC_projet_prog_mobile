@@ -12,7 +12,6 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.projet_prog_mobile.R
-import com.example.projet_prog_mobile.data.api.ApiException
 import com.example.projet_prog_mobile.data.local.product.Product
 import com.example.projet_prog_mobile.domain.repository.ScanRepository
 import com.example.projet_prog_mobile.presentation.state.ScannerState
@@ -71,17 +70,21 @@ class ScannerViewModel @Inject constructor(
                     vmState.update { it.copy( loading = false, error = "Product not found" ) }
                 } else {
                     val averagePrice = (result.items[0].lowest_recorded_price+result.items[0].lowest_recorded_price)/2
+                    val image = if(result.items[0].images.isNotEmpty())
+                        result.items[0].images[0]
+                        else null
                     val createProduct = Product(
                         uid= UUID.randomUUID().toString(),
                         title = result.items[0].title,
-                        quantity = 0,
-                        price = averagePrice.toDouble()
+                        image=image,
+                        quantity = 1,
+                        price = averagePrice.toString()
                     )
                     vmState.update { it.copy( loading = false, product = createProduct ) }
                 }
 
-            } catch (e: ApiException) {
-                vmState.update { it.copy( loading = false, showBottomSheet = false, error = e.message) }
+            } catch (e: Exception) {
+                vmState.update { it.copy( loading = false, showBottomSheet = false, error = "Error while scanning") }
             }
         }
     }
@@ -90,6 +93,14 @@ class ScannerViewModel @Inject constructor(
         viewModelScope.launch {
             vmState.update { currentState ->
                 currentState.copy(product = currentState.product?.copy(quantity = quantity))
+            }
+        }
+    }
+
+    fun changeProductPrice(price:String){
+        viewModelScope.launch {
+            vmState.update { currentState ->
+                currentState.copy(product = currentState.product?.copy(price = price))
             }
         }
     }
@@ -125,7 +136,8 @@ class ScannerViewModel @Inject constructor(
                 workDataOf(
                     ShopWorker.KEY_TITLE to vmState.value.product!!.title,
                     ShopWorker.KEY_QUANTITY to vmState.value.product!!.quantity,
-                    ShopWorker.KEY_PRICE to vmState.value.product!!.price
+                    ShopWorker.KEY_PRICE to vmState.value.product!!.price,
+                    ShopWorker.KEY_IMAGE to vmState.value.product!!.image
                 )
             )
             .setConstraints(constraints)

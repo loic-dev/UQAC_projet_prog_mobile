@@ -20,11 +20,13 @@ class ShopWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         val title = inputData.getString(KEY_TITLE)
         val quantity = inputData.getInt(KEY_QUANTITY, 0)
-        val price = inputData.getDouble(KEY_PRICE, 0.0)
+        val price = inputData.getString(KEY_PRICE) ?: "0.0"
+        val image = inputData.getString(KEY_IMAGE)
         return try {
             if (!title.isNullOrBlank()) {
                 shopRepository.addProduct(Product(uid = UUID.randomUUID().toString(),
                     title = title,
+                    image=image,
                     quantity = quantity,
                     price = price))
                 Result.success()
@@ -40,6 +42,7 @@ class ShopWorker @AssistedInject constructor(
         const val KEY_TITLE = "title_key"
         const val KEY_QUANTITY = "quantity_key"
         const val KEY_PRICE = "price_key"
+        const val KEY_IMAGE = "image_key"
     }
 }
 

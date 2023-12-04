@@ -45,6 +45,7 @@ fun ScannerContainer(
     clearNotification:()->Unit,
     addProductToShop: () -> Unit,
     onChangeQuantity:(Int) -> Unit,
+    onChangePrice:(String) -> Unit,
     hideBottomSheet:()->Unit,
     backShoppingPage:()->Unit,
 ) {
@@ -92,6 +93,7 @@ fun ScannerContainer(
                                 product = it,
                                 modifier = Modifier,
                                 onChangeQuantity = onChangeQuantity,
+                                onChangePrice = onChangePrice,
                                 hideBottomSheet = { hideBottomSheet() },
                                 addProductToShop = { addProductToShop() }
                             )

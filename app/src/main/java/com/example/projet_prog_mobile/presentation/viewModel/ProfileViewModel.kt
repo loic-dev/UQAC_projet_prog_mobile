@@ -1,6 +1,5 @@
 package com.example.projet_prog_mobile.presentation.viewModel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -25,7 +24,6 @@ class ProfileViewModel @Inject constructor(
             try {
                 val user = userRepository.getUser()
                 if(user !== null){
-                    Log.d("User : ", user.toString())
                     profileState = profileState.copy(
                         firstname = user.firstName.toString(),
                         lastname = user.lastName.toString(),
