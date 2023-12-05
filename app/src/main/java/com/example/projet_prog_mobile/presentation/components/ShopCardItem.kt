@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.QuestionMark
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,55 +33,59 @@ fun ShopCardItem(
     price:String,
     image:String?
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = colorResource(id = R.color.white ) )
-            .padding(top = 20.dp, bottom = 20.dp)
-    ) {
-        Box(
-            Modifier
-                .size(80.dp)
-                .clip(CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            if(image !== null){
-                AsyncImage(
-                    model = image,
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp)
-                )
-            } else {
-                Icon(
-                    Icons.Filled.QuestionMark,
-                    contentDescription = "Image not available",
-                )
-            }
-        }
-
-        Column(
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(5.dp),
+    Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
             modifier = Modifier
-                .padding(horizontal = 10.dp)
-                .weight(1f)
+                .fillMaxWidth()
+                .background(color = colorResource(id = R.color.white))
+                .padding(top = 20.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
         ) {
-            Text(
-                text = title,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold,
+            Box(
+                Modifier
+                    .size(40.dp)
+                    .clip(CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                if(image !== null){
+                    AsyncImage(
+                        model = image,
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp)
+                    )
+                } else {
+                    Icon(
+                        Icons.Filled.QuestionMark,
+                        contentDescription = "Image not available",
+                    )
+                }
+            }
 
-                )
-            Text(
-                text = "Quantity: $quantity",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Light,
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(5.dp),
+                modifier = Modifier
+                    .padding(start=20.dp, end=10.dp)
+                    .weight(1f)
+            ) {
+                Text(
+                    text = title,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
 
-                )
+                    )
+                Text(
+                    text = "Quantity: $quantity",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Light,
+
+                    )
+            }
+            Text(text="$price $",fontSize = 16.sp, fontWeight = FontWeight.Bold, color= colorResource(id = R.color.main_pink))
+
         }
-        Text(text="$price $",fontSize = 16.sp, fontWeight = FontWeight.Bold, color= colorResource(id = R.color.main_pink))
-
+        Divider()
     }
+
 }
