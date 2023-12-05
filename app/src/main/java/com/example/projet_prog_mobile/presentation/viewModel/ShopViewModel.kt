@@ -1,13 +1,14 @@
 package com.example.projet_prog_mobile.presentation.viewModel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projet_prog_mobile.data.local.product.Product
 import com.example.projet_prog_mobile.domain.repository.ShopRepository
 import com.example.projet_prog_mobile.presentation.state.ShopState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,15 +17,31 @@ class ShopViewModel @Inject constructor(
     private val shopRepository: ShopRepository
 ): ViewModel() {
 
-    var shopState by mutableStateOf(ShopState())
-        private set
+    private val _shopState = MutableStateFlow(ShopState())
+    val shopState = _shopState.asStateFlow()
 
 
-    fun onLoad(){
+    fun getProducts(){
         viewModelScope.launch {
             val shop = shopRepository.getListProduct()
-            shopState = shopState.copy(products = shop)
+            _shopState.update { it.copy(products = shop) }
         }
+    }
+
+    fun onSwipeToDelete(product: Product){
+        viewModelScope.launch {
+            shopRepository.deleteProduct(product)
+            getProducts()
+        }
+    }
+
+    fun getTotalPrice(): Double {
+        var globalPrice = 0.00
+        _shopState.value.products.forEach { product ->
+            val price = product.price.toDouble() * product.quantity
+            globalPrice += price
+        }
+        return globalPrice
     }
 
 }

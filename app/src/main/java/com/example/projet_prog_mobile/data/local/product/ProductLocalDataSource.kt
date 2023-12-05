@@ -12,4 +12,8 @@ class ProductLocalDataSource @Inject constructor(
     fun addProduct(product: Product){
         return productDao.addProduct(product)
     }
+
+    fun deleteProduct(product: Product){
+        return productDao.deleteProduct(product)
+    }
 }

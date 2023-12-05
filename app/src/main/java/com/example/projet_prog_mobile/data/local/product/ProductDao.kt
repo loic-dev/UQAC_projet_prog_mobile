@@ -1,6 +1,7 @@
 package com.example.projet_prog_mobile.data.local.product
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 
 import androidx.room.Query
@@ -14,4 +15,7 @@ interface ProductDao {
 
     @Insert
     fun addProduct(vararg product: Product)
+
+    @Delete
+    fun deleteProduct(vararg product: Product)
 }

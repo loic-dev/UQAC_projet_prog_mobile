@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.projet_prog_mobile.R
@@ -146,14 +147,20 @@ class ScannerViewModel @Inject constructor(
          workManager.enqueue(workerRequest)
          val workInfoLiveData = workManager.getWorkInfoByIdLiveData(workerRequest.id)
          workInfoLiveData.observeForever { workInfo ->
-             if (workInfo != null && workInfo.state.isFinished) {
-                     _notificationMessage.value =
+             if (workInfo != null) {
+                 when (workInfo.state) {
+                     WorkInfo.State.FAILED -> _notificationMessage.value =
+                         application.getString(R.string.scan_screen_product_added_to_shop_error_notif)
+
+                     WorkInfo.State.SUCCEEDED -> _notificationMessage.value =
                          application.getString(R.string.scan_screen_product_added_to_shop_success_notif)
-                 } else {
-                    _notificationMessage.value = application.getString(R.string.scan_screen_product_added_to_shop_error_notif)
+
+                     else -> {}
                  }
              }
          }
+
+     }
     }
 
 

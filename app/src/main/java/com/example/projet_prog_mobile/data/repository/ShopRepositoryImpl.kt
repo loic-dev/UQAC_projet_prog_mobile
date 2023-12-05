@@ -31,4 +31,14 @@ class ShopRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteProduct(product: Product) {
+        return try {
+            withContext(ioDispatcher) {
+                productLocalDataSource.deleteProduct(product)
+            }
+        } catch (e: Exception){
+            throw e
+        }
+    }
+
 }
