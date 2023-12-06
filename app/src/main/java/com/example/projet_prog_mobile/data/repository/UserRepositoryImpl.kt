@@ -28,15 +28,16 @@ class UserRepositoryImpl @Inject constructor(
             val loginResponse =  userRemoteDataSource.login(email,password)
             withContext(ioDispatcher) {
                 val currentUser = userLocalDataSource.getUserEntity()
-                val userDetail = User(
-                    uid = UUID.randomUUID().toString(),
-                    token = loginResponse.token,
-                    firstName = loginResponse.user.firstname,
-                    lastName = loginResponse.user.lastname,
-                    email=loginResponse.user.email)
                 if(currentUser != null){
-                    userLocalDataSource.updateUserEntity(userDetail)
+                    val userUpdated = currentUser.copy(token = currentUser.token)
+                    userLocalDataSource.updateUserEntity(userUpdated)
                 } else {
+                    val userDetail = User(
+                        uid = UUID.randomUUID().toString(),
+                        token = loginResponse.token,
+                        firstName = loginResponse.user.firstname,
+                        lastName = loginResponse.user.lastname,
+                        email=loginResponse.user.email)
                     userLocalDataSource.createUserEntity(userDetail)
                 }
             }
