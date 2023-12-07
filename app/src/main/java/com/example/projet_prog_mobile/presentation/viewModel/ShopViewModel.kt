@@ -35,6 +35,24 @@ class ShopViewModel @Inject constructor(
         }
     }
 
+    private fun clearShop(){
+        viewModelScope.launch {
+            shopRepository.clearShop()
+            getProducts()
+        }
+    }
+
+    fun onSaveInvoice(){
+        viewModelScope.launch {
+            _shopState.update { it.copy(loadingOnSaveInvoice = true) }
+            shopRepository.createInvoice()
+            clearShop()
+            _shopState.update { it.copy(loadingOnSaveInvoice = false) }
+        }
+    }
+
+
+
     fun getTotalPrice(): Double {
         var globalPrice = 0.00
         _shopState.value.products.forEach { product ->

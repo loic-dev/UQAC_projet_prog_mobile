@@ -12,6 +12,8 @@ interface ProductDao {
 
     @Query("SELECT * FROM Product")
     fun getListProduct(): List<Product>
+    @Query("DELETE FROM Product")
+    fun clearShop()
 
     @Insert
     fun addProduct(vararg product: Product)

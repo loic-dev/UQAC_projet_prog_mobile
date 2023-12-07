@@ -153,5 +153,22 @@ fun ShopScreen(modifier: Modifier,
             )
 
         )
+        if(shopState.products.isNotEmpty()){
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal=40.dp),
+                colors= ButtonDefaults.buttonColors(
+                    containerColor= colorResource(id = R.color.main_pink)
+                ),
+                onClick = { shopViewModel.onSaveInvoice() }) {
+                if(shopState.loadingOnSaveInvoice){
+                    Text(text = "Loading")
+                } else {
+                    Text(text = "Save invoice as file")
+                }
+
+            }
+        }
+
     }
 }

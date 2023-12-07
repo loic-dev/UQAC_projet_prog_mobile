@@ -9,6 +9,12 @@ class ProductLocalDataSource @Inject constructor(
         return productDao.getListProduct()
     }
 
+    fun clearShop() {
+        return productDao.clearShop()
+    }
+
+
+
     fun addProduct(product: Product){
         return productDao.addProduct(product)
     }

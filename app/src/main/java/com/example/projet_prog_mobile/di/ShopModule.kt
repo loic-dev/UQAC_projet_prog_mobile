@@ -1,5 +1,6 @@
 package com.example.projet_prog_mobile.di
 
+import com.example.projet_prog_mobile.data.api.invoice.InvoiceRemoteDataSource
 import com.example.projet_prog_mobile.data.local.product.ProductLocalDataSource
 import com.example.projet_prog_mobile.data.repository.ShopRepositoryImpl
 import com.example.projet_prog_mobile.domain.repository.ShopRepository
@@ -18,9 +19,10 @@ object ShopModule {
     @Singleton
     fun provideShopRepository(
         productLocalDataSource: ProductLocalDataSource,
-        ioDispatcher: CoroutineDispatcher
+        ioDispatcher: CoroutineDispatcher,
+        invoiceRemoteDataSource:InvoiceRemoteDataSource
     ): ShopRepository {
-        return ShopRepositoryImpl(productLocalDataSource, ioDispatcher)
+        return ShopRepositoryImpl(productLocalDataSource,invoiceRemoteDataSource,ioDispatcher)
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.projet_prog_mobile.R
 import com.example.projet_prog_mobile.data.api.AuthInterceptor
+import com.example.projet_prog_mobile.data.api.invoice.InvoiceAPI
 import com.example.projet_prog_mobile.data.api.product.ProductApi
 import com.example.projet_prog_mobile.data.api.user.UserApi
 import com.example.projet_prog_mobile.data.local.user.UserLocalDataSource
@@ -77,4 +78,8 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideProductAPI(retrofit: Retrofit): ProductApi = retrofit.create(ProductApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideInvoiceAPI(retrofit: Retrofit): InvoiceAPI = retrofit.create(InvoiceAPI::class.java)
 }
