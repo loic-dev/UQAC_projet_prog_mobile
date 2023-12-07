@@ -1,5 +1,63 @@
 <resources>
     <string name="app_name">projet_prog_mobile</string>
+    <string name="api_url">https://uqac-projet-prog-mobile-api.fly.dev</string>
     <string name="splash">SplashScreen</string>
     <string name="main">MainActivity</string>
+    <string name="hide_password">hide</string>
+    <string name="show_password">show</string>
+    <string name="channel_name">Steps counter\n</string>
+    <string name="channel_description">step counter</string>
+    <string name="login_page_subtitle">Please sign in to your account first</string>
+    <string name="login_page_title">Sign In</string>
+    <string name="email_input_placeholder">Enter email</string>
+    <string name="password_input_placeholder">Enter password</string>
+    <string name="blind_text_hide_password">Hide Password</string>
+    <string name="blind_text_show_password">Show Password</string>
+    <string name="login_page_link_to_signup_text_question">Don’t have an account yet ?</string>
+    <string name="login_page_link_to_signup_text">Sign up</string>
+    <string name="login_page_button_text">Sign In</string>
+    <string name="confirm_password_input_placeholder">Confirm your password</string>
+    <string name="firstname_input_placeholder">Firstname</string>
+    <string name="lastname_input_placeholder">Lastname</string>
+    <string name="register_page_title">Let\'s Register Account</string>
+    <string name="register_page_subtitle">Hello, you have a grateful journey</string>
+    <string name="register_page_button_signup">Sign Up</string>
+    <string name="register_page_link_to_login_question">"Already have an account ? "</string>
+    <string name="register_page_link_to_login_text">Sign In</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_firstname">First Name</string>
+    <string name="profile_lastname">Last Name</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_logout">Log out</string>
+
+    <!-- Scan screen -->
+    <string name="scan_message">Frame a QR or bar code</string>
+    <string name="scan_share_value">Share content</string>
+    <string name="scan_value_copied">Content copied</string>
+
+    <!-- Bottom scan panel -->
+    <string name="scan_sheet_web_action">Website</string>
+
+    <!-- Camera request dialog -->
+    <string name="camera_required_message">The application requires permission to the camera to work.</string>
+    <string name="camera_required_continue_btn">Continue</string>
+    <string name="camera_required_exit_btn">Exit</string>
+
+    <!-- Scan format -->
+    <string name="scan_format_qr_code">QR code</string>
+    <string name="scan_format_aztec">Aztec code</string>
+    <string name="scan_format_data_matrix">Data matrix code</string>
+    <string name="scan_format_pdf">PDF417 code</string>
+    <string name="scan_format_barcode">Barcode</string>
+    <string name="scan_format_code_128">Barcode (128)</string>
+    <string name="scan_format_code_93">Barcode (93)</string>
+    <string name="scan_format_code_39">Barcode (39)</string>
+    <string name="scan_format_ean_13">Barcode EAN-13</string>
+    <string name="scan_format_ean_8">Barcode EAN-8</string>
+    <string name="scan_format_itf">Barcode ITF</string>
+    <string name="scan_format_upc_a">Barcode UPC-A</string>
+    <string name="scan_format_upc_e">Barcode UPC-E</string>
+    <string name="scan_format_unknown">Code</string>
+    <string name="scan_screen_product_added_to_shop_success_notif">Product added</string>
+    <string name="scan_screen_product_added_to_shop_error_notif">\"Error while product adding\"</string>
 </resources>
